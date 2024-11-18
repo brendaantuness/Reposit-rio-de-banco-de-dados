@@ -1,0 +1,63 @@
+-- Criação do banco de dados
+CREATE DATABASE OficinaDB;
+
+-- Seleciona o banco de dados
+USE OficinaDB;
+
+-- Tabela Cliente
+CREATE TABLE Cliente (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    endereco VARCHAR(200) NOT NULL
+);
+
+-- Tabela Veículo
+CREATE TABLE Veiculo (
+    id_veiculo INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT,
+    placa VARCHAR(20) NOT NULL UNIQUE,
+    modelo VARCHAR(100) NOT NULL,
+    ano INT,
+    marca VARCHAR(50),
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente) ON DELETE CASCADE
+);
+
+-- Tabela Serviço
+CREATE TABLE Servico (
+    id_servico INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    preco DECIMAL(10, 2) NOT NULL
+);
+
+-- Tabela Mecânico
+CREATE TABLE Mecânico (
+    id_mecanico INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    especialidade VARCHAR(100),
+    telefone VARCHAR(20)
+);
+
+-- Tabela Pedido de Manutenção
+CREATE TABLE PedidoManutencao (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_veiculo INT,
+    data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('Pendente', 'Em andamento', 'Concluído', 'Cancelado') NOT NULL,
+    FOREIGN KEY (id_veiculo) REFERENCES Veiculo(id_veiculo) ON DELETE CASCADE
+);
+
+-- Tabela Itens do Pedido
+CREATE TABLE ItensPedido (
+    id_pedido INT,
+    id_servico INT,
+    id_mecanico INT,
+    quantidade INT NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (id_pedido, id_servico),
+    FOREIGN KEY (id_pedido) REFERENCES PedidoManutencao(id_pedido) ON DELETE CASCADE,
+    FOREIGN KEY (id_servico) REFERENCES Servico(id_servico) ON DELETE CASCADE,
+    FOREIGN KEY (id_mecanico) REFERENCES Mecânico(id_mecanico) ON DELETE CASCADE
+);
