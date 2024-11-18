@@ -1,0 +1,33 @@
+def filtrar_funcionarios_por_cargo(n, funcionarios, cargo_desejado):
+    # Criar uma lista para armazenar os nomes dos funcionários que ocupam o cargo desejado
+    nomes_filtrados = []
+    
+    # Iterar sobre a lista de funcionários
+    for funcionario in funcionarios:
+        # Verificar se o cargo do funcionário é o cargo desejado
+        if funcionario['cargo'] == cargo_desejado:
+            # Se for, adicionar o nome do funcionário na lista de resultados
+            nomes_filtrados.append(funcionario['nome'])
+    
+    # Retornar a lista de nomes dos funcionários com o cargo desejado
+    return nomes_filtrados
+
+# Exemplo de uso
+
+# Entrada
+n = 5  # número de funcionários
+funcionarios = [
+    {'id': 1, 'nome': 'Ana', 'cargo': 'Gerente'},
+    {'id': 2, 'nome': 'Carlos', 'cargo': 'Analista'},
+    {'id': 3, 'nome': 'Paula', 'cargo': 'Gerente'},
+    {'id': 4, 'nome': 'Roberto', 'cargo': 'Assistente'},
+    {'id': 5, 'nome': 'Fernanda', 'cargo': 'Gerente'}
+]
+
+cargo_desejado = 'Gerente'
+
+# Chamada da função
+resultado = filtrar_funcionarios_por_cargo(n, funcionarios, cargo_desejado)
+
+# Saída
+print(resultado)  # Saída esperada: ['Ana', 'Paula', 'Fernanda']
